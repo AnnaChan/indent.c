@@ -3,9 +3,14 @@
 
 void main (void)
 {
-	int ch;		
-	while (ch = getchar() != EOF)		// Do while is not end of file
+	int ch;
+	ch = getchar();	
+	while (ch!= EOF)		// Do while is not end of file
 	{
+		if (ch!=';' && ch!='{' && ch!='}')
+		{
+			putchar(ch);
+		}
 		if (ch == ';')
 		{
 			putchar(ch);
@@ -14,10 +19,10 @@ void main (void)
 		}	
 		if (ch == '{')
 		{
-			putchar('\n');
-			putchar(ch);
-			putchar('\n');
-			putchar('\t');	
+				putchar('\n');
+				putchar(ch);
+				putchar('\n');
+				putchar('\t');			
 		}
 		if (ch == '}')
 		{
@@ -25,5 +30,6 @@ void main (void)
 			putchar(ch);
 			putchar('\n');
 		}
+		ch = getchar(); 
 	}	
 }
