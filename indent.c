@@ -12,46 +12,58 @@ void main (void)
 	int chartoprint = 0;
 	int opened_braces = 0;
 	int closed_braces = 0;
+	int opened_parenthesis = 0;
+	
+	ch = getchar();
 	
 	while (ch != EOF)
 	{
-		ch = getchar();
 		if (after_precompiler == 0) // if the commands are for the precompiler
 		{
-			chartoprint = previous_char5;
-			previous_char5 = previous_char4;
-			previous_char4 = previous_char3;
-			previous_char3 = previous_char2;
-			previous_char2 = previous_char1;
-			previous_char1 = ch;
-		
-			if (previous_char5 == '\n' && previous_char4 == 'm' && previous_char3 == 'a' && previous_char2 == 'i' && previous_char1 == 'n') 
+			if (previous_char4 == '\n' && previous_char3 == 'm' && previous_char2== 'a' && previous_char1 == 'i' && ch == 'n') 
 			{
 				after_precompiler = 1;
-				putchar(previous_char5);
 				putchar(previous_char4);
 				putchar(previous_char3);
 				putchar(previous_char2);
-				putchar(previous_char1);			
+				putchar(previous_char1);
+				putchar(ch);
+				ch = getchar();
 			}
 			else
 				putchar(chartoprint);
+				
+				chartoprint = previous_char4;
+				previous_char4 = previous_char3;
+				previous_char3 = previous_char2;
+				previous_char2 = previous_char1;
+				previous_char1 = ch;
 		}
-		
+	
 		if (after_precompiler == 1) // commands after main
 		{
-			previous_char2 = previous_char1;
-			previous_char1 = ch;
 			
 			if((ch == ' ' || ch == '\t' || ch == '\n') && previous_char1 != ' ' && previous_char1 != '\t' && previous_char1 != '\n'  && previous_char1 != ';')
 			{
 				putchar(ch);
 			}
+			if (ch == '(')
+			{
+				opened_parenthesis += 1;	
+			} 
+			if (ch == ')')
+			{
+				opened_parenthesis -= 1;
+			}
 			
-			if (ch == ';')
+			if (ch == ';' && opened_parenthesis == 0)
 			{
 				putchar(ch);
 				putchar('\n');	
+			}
+			else if (ch == ';' && opened_parenthesis > 0)
+			{
+				putchar(ch);
 			}
 			if (ch == '{')
 			{
@@ -68,22 +80,27 @@ void main (void)
 				putchar('\n');
 				opened_braces -= 1;
 			}
-		}
-		if (opened_braces > 0)
-		{
-			int i;
-			for (i=1; i<= opened_braces; i++)
+			if (ch == ';' && opened_braces > 0 && opened_parenthesis == 0)
 			{
-				putchar('\t');
+				int i;
+				for (i=1; i<= opened_braces; i++)
+				{
+					putchar('\t');
+				}
+				putchar(ch);
 			}
-			putchar(ch);
+			if (ch != ';' && ch != '{' && ch != '}' && ch != '\n' && ch != ' ' && ch != '\t')
+			{
+				putchar(ch);
+			}
 		}
+		previous_char1 = ch;
 		ch = getchar();
-			
+
 	}
 }
 
-	
+
 	
 	
 	
