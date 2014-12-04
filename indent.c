@@ -3,8 +3,62 @@
 
 void main (void)
 {
-	int ch, isquote = 0, ischar = 0, open_parenthesis = 0, close_parenthesis = 0, previousch = 0; 
+	int after_precompiler = 0, ch;	// after_precompiler is inactive, means there are the commands for the precompiler
+	int previous_char1 = 0;
+	int previous_char2 = 0;
+	int previous_char3 = 0;
+	int previous_char4 = 0;
+	int previous_char5 = 0;
+	int chartoprint = 0;
+	
+	while (ch != EOF)
+	{
+		ch = getchar();
+		if (after_precompiler == 0) // if the commands are for the precompiler
+		{
+			chartoprint = previous_char5;
+			previous_char5 = previous_char4;
+			previous_char4 = previous_char3;
+			previous_char3 = previous_char2;
+			previous_char2 = previous_char1;
+			previous_char1 = ch;
+		
+			if (previous_char5 == '\n' && previous_char4 == 'm' && previous_char3 == 'a' && previous_char2 == 'i' && previous_char1 == 'n')
+			{
+				after_precompiler = 1;
+				putchar(previous_char5);
+				putchar(previous_char4);
+				putchar(previous_char3);
+				putchar(previous_char2);
+				putchar(previous_char1);			
+			}
+			else
+				putchar(chartoprint);
+		
+		
+	}
+
+		
+		
+		
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*int ch, isquote = 0, ischar = 0, open_parenthesis = 0, close_parenthesis = 0, previousch = 0,   
 	ch = getchar();	
+	if ()
 	while (ch!= EOF)		// Do while is not end of file
 	{
 		if (ch == '\n' && previousch == '\n')
@@ -70,5 +124,5 @@ void main (void)
 		}
 		previousch = ch;
 		ch = getchar(); 
-	}	
+	}*/	
 }
