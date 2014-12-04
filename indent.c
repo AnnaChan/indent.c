@@ -10,6 +10,7 @@ void main (void)
 	int previous_char4 = 0;
 	int previous_char5 = 0;
 	int chartoprint = 0;
+	int inside_agkyles = 0;
 	
 	while (ch != EOF)
 	{
@@ -23,7 +24,7 @@ void main (void)
 			previous_char2 = previous_char1;
 			previous_char1 = ch;
 		
-			if (previous_char5 == '\n' && previous_char4 == 'm' && previous_char3 == 'a' && previous_char2 == 'i' && previous_char1 == 'n')
+			if (previous_char5 == '\n' && previous_char4 == 'm' && previous_char3 == 'a' && previous_char2 == 'i' && previous_char1 == 'n') 
 			{
 				after_precompiler = 1;
 				putchar(previous_char5);
@@ -34,15 +35,52 @@ void main (void)
 			}
 			else
 				putchar(chartoprint);
+		}
 		
-		
+		if (after_precompiler == 1) // commands after main
+		{
+			previous_char2 = previous_char1;
+			previous_char1 = ch;
+			
+			if((ch == ' ' || ch == '\t' || ch == '\n') && previous_char1 != ' ' && previous_char1 != '\t' && previous_char1 != '\n')
+			{
+				putchar(ch);
+			}
+			
+			if (ch == ';')
+			{
+				putchar(ch);
+				putchar('\n');	
+			}
+			if (ch == ' ' && previous_char1 == ';')
+			{
+				getchar();
+			}
+			if (ch == '{')
+			{
+				putchar('\n');
+				putchar(ch);
+				putchar('\n');
+				putchar('\t');
+				inside_agkyles = 1;
+			}
+			if (ch == '}')
+			{
+				putchar('\n');
+				putchar(ch);
+				putchar('\n');
+				inside_agkyles = 0;
+			}
+		}
+		if (inside_agkyles = 1)
+		{
+			putchar('\t');
+			putchar(ch);
+		}
+		ch = getchar();
+			
 	}
-
-		
-		
-		
-		
-	}
+}
 
 	
 	
@@ -125,4 +163,4 @@ void main (void)
 		previousch = ch;
 		ch = getchar(); 
 	}*/	
-}
+
