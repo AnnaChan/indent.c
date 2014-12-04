@@ -10,7 +10,8 @@ void main (void)
 	int previous_char4 = 0;
 	int previous_char5 = 0;
 	int chartoprint = 0;
-	int inside_agkyles = 0;
+	int opened_braces = 0;
+	int closed_braces = 0;
 	
 	while (ch != EOF)
 	{
@@ -58,19 +59,23 @@ void main (void)
 				putchar(ch);
 				putchar('\n');
 				putchar('\t');
-				inside_agkyles = 1;
+				opened_braces += 1;
 			}
 			if (ch == '}')
 			{
 				putchar('\n');
 				putchar(ch);
 				putchar('\n');
-				inside_agkyles = 0;
+				opened_braces -= 1;
 			}
 		}
-		if (inside_agkyles = 1)
+		if (opened_braces > 0)
 		{
-			putchar('\t');
+			int i;
+			for (i=1; i<= opened_braces; i++)
+			{
+				putchar('\t');
+			}
 			putchar(ch);
 		}
 		ch = getchar();
