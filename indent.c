@@ -42,7 +42,7 @@ void main (void)
 			previous_char2 = previous_char1;
 			previous_char1 = ch;
 			
-			if((ch == ' ' || ch == '\t' || ch == '\n') && previous_char1 != ' ' && previous_char1 != '\t' && previous_char1 != '\n')
+			if((ch == ' ' || ch == '\t' || ch == '\n') && previous_char1 != ' ' && previous_char1 != '\t' && previous_char1 != '\n'  && previous_char1 != ';')
 			{
 				putchar(ch);
 			}
@@ -51,10 +51,6 @@ void main (void)
 			{
 				putchar(ch);
 				putchar('\n');	
-			}
-			if (ch == ' ' && previous_char1 == ';')
-			{
-				getchar();
 			}
 			if (ch == '{')
 			{
