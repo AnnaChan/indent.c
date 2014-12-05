@@ -43,17 +43,13 @@ void main (void)
 		if (after_precompiler == 1) // commands after main
 		{
 			
-			if((ch == ' ' || ch == '\t' || ch == '\n') && previous_char1 != ' ' && previous_char1 != '\t' && previous_char1 != '\n'  && previous_char1 != ';')
+			if((ch == ' ' || ch == '\t') && previous_char1 != ' ' && previous_char1 != '\t' && previous_char1 != '\n'  && previous_char1 != ';')
 			{
 				putchar(ch);
 			}
-			if (ch == '(')
+			if(ch == '\n' && previous_char1 != ' ' && previous_char1 != '\t' && previous_char1 != '\n'  && previous_char1 != ';' && opened_parenthesis == 0)
 			{
-				opened_parenthesis += 1;	
-			} 
-			if (ch == ')')
-			{
-				opened_parenthesis -= 1;
+				putchar(ch);
 			}
 			
 			if (ch == ';' && opened_parenthesis == 0)
