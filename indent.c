@@ -3,7 +3,7 @@
 
 void main (void)
 {
-	int after_precompiler = 0, ch;	// after_precompiler is inactive, means there are the commands for the precompiler
+	int after_precompiler = 0, ch;
 	int previous_char1 = 0;
 	int previous_char2 = 0;
 	int previous_char3 = 0;
@@ -19,20 +19,22 @@ void main (void)
 	while (ch != EOF)
 	{
 		if (after_precompiler == 0) // if the commands are for the precompiler
-		{
-			if (previous_char4 == '\n' && previous_char3 == 'm' && previous_char2== 'a' && previous_char1 == 'i' && ch == 'n') 
+		{	//if we encounter the word "main"
+			if (previous_char4 == '\n' && previous_char3 == 'm' && previous_char2== 'a' && previous_char1 == 'i' && ch == 'n')
 			{
-				after_precompiler = 1;
+				after_precompiler = 1; // flag that the commands are after main()
 				putchar(previous_char4);
 				putchar(previous_char3);
 				putchar(previous_char2);
 				putchar(previous_char1);
-				putchar(ch);
+				putchar(ch); // all the above makes it print the word "main"
 				ch = getchar();
 			}
 			else
-				putchar(chartoprint);
+				if (chartoprint != 0)
+					putchar(chartoprint);
 				
+				//read 5 characters ahead (to catch the word "main")
 				chartoprint = previous_char4;
 				previous_char4 = previous_char3;
 				previous_char3 = previous_char2;
@@ -40,13 +42,14 @@ void main (void)
 				previous_char1 = ch;
 		}
 	
-		if (after_precompiler == 1) // commands after main
+		if (after_precompiler == 1) // commands after main()
 		{
-			
+			//avoid multiple whitespaces, multiple changes of line and multiple tabs or combination of them
 			if((ch == ' ' || ch == '\t') && previous_char1 != ' ' && previous_char1 != '\t' && previous_char1 != '\n'  && previous_char1 != ';')
 			{
 				putchar(ch);
 			}
+			//as above but also, if the character is \n, do not change line if inside parentheses.
 			if(ch == '\n' && previous_char1 != ' ' && previous_char1 != '\t' && previous_char1 != '\n'  && previous_char1 != ';' && opened_parenthesis == 0)
 			{
 				putchar(ch);
@@ -56,8 +59,18 @@ void main (void)
 			{
 				putchar(ch);
 				putchar('\n');	
+				
+				if (opened_braces > 0)
+				{
+					int i;
+					for (i=1; i<= opened_braces; i++) // print as many tabs as the amount of open braces
+					{
+						putchar('\t');
+					}
+				}
 			}
-			else if (ch == ';' && opened_parenthesis > 0)
+			
+			else if (ch == ';' && opened_parenthesis > 0) // treat ';' as any other character if inside parentheses, i.e. do not change line
 			{
 				putchar(ch);
 			}
@@ -67,30 +80,22 @@ void main (void)
 				putchar(ch);
 				putchar('\n');
 				putchar('\t');
-				opened_braces += 1;
+				opened_braces += 1; // counts the number of open braces
 			}
 			if (ch == '}')
 			{
 				putchar('\n');
 				putchar(ch);
 				putchar('\n');
-				opened_braces -= 1;
+				opened_braces -= 1; // counts the number of open braces (decrease)
 			}
-			if (ch == ';' && opened_braces > 0 && opened_parenthesis == 0)
-			{
-				int i;
-				for (i=1; i<= opened_braces; i++)
-				{
-					putchar('\t');
-				}
-				putchar(ch);
-			}
+			// if the character is not any of "special" characters mentioned above, then just print it normally
 			if (ch != ';' && ch != '{' && ch != '}' && ch != '\n' && ch != ' ' && ch != '\t')
 			{
 				putchar(ch);
 			}
 		}
-		previous_char1 = ch;
+		previous_char1 = ch; // remember the previous character, to be able to reject multiple spaces, multiple tabs etc.
 		ch = getchar();
 
 	}
