@@ -2,7 +2,7 @@
 
 cd /D %1
 
-gcc %2.c -o %2.exe
+gcc -o %2.exe %2.c
 
 REM %2.exe
 
